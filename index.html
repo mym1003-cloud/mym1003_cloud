@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="ko" data-lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yoo-mi Moon - Interactive Research Portfolio</title>
+<meta name="description" content="문유미 교수 연구 포트폴리오 · 경기대학교 · 한국재난정보학회 연구소장" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f5f6fb;
+    --card: #ffffff;
+    --fg: #1e2330;
+    --muted: #5e6878;
+    --accent: #6772e5;
+    --accent-2: #a4acf0;
+    --accent-soft: #eef0fc;
+    --border: #e4e7f1;
+    --shadow-sm: 0 2px 10px rgba(32,43,86,.04);
+    --shadow: 0 10px 30px rgba(32, 43, 86, 0.06);
+    --shadow-lg: 0 18px 50px rgba(32, 43, 86, 0.10);
+    --tag-blue:#e8ecff;  --tag-blue-fg:#4356d5;
+    --tag-green:#e2f4e6; --tag-green-fg:#2a8043;
+    --tag-yellow:#fff1d1; --tag-yellow-fg:#8d6413;
+    --tag-red:#ffe1e7;   --tag-red-fg:#b93152;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family: 'Inter','Noto Sans KR',-apple-system,sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit;text-decoration:none}
+
+  .container{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ===== Nav (참고자 스타일) ===== */
+  nav{
+    position:sticky; top:0; z-index:100;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  nav .inner{
+    max-width:1180px;margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .brand{font-weight:700;font-size:17px;letter-spacing:-0.01em}
+  .nav-links{list-style:none;display:flex;gap:36px}
+  .nav-links a{
+    font-size:15px;font-weight:500;color:var(--muted);
+    padding:6px 2px;position:relative;transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--fg)}
+  .nav-links a.active{color:var(--accent);font-weight:600}
+
+  .lang-toggle{display:flex;background:#eef0fc;padding:4px;border-radius:999px;gap:2px}
+  .lang-toggle button{
+    border:0;background:transparent;cursor:pointer;
+    padding:7px 18px;border-radius:999px;font-weight:600;font-size:13.5px;
+    color:var(--muted);transition:.2s;font-family:inherit;
+  }
+  .lang-toggle button.on{background:var(--accent);color:#fff;box-shadow:0 4px 10px rgba(103,114,229,.35)}
+  @media (max-width:820px){.nav-links{display:none}}
+
+  /* ===== Hero (참고자 스타일 - 중앙 정렬, 큰 이름) ===== */
+  .hero{padding:100px 0 60px;text-align:center}
+  .hero h1{
+    font-size:clamp(44px,7vw,78px);
+    font-weight:800;letter-spacing:-0.03em;line-height:1.08;
+    margin-bottom:18px;
+  }
+  .hero .affil{color:var(--muted);font-size:19px;margin-bottom:32px;font-weight:500}
+  .contact-row{
+    display:flex;gap:0;justify-content:center;flex-wrap:wrap;align-items:center;
+    color:var(--muted);font-size:15px;margin-bottom:32px;
+  }
+  .contact-row a{padding:0 20px;transition:color .2s;display:inline-flex;align-items:center;gap:8px}
+  .contact-row a:hover{color:var(--accent)}
+  .contact-row .dot{width:5px;height:5px;border-radius:50%;background:#b9bfcf}
+  .contact-row .mail-ico{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:var(--accent-soft);
+  }
+  .contact-row .mail-ico svg{width:12px;height:12px;color:var(--accent)}
+
+  .keyword-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+  .kw{
+    padding:8px 18px;border-radius:999px;font-size:13.5px;font-weight:600;
+  }
+  .kw.blue{background:var(--tag-blue);color:var(--tag-blue-fg)}
+  .kw.green{background:var(--tag-green);color:var(--tag-green-fg)}
+  .kw.yellow{background:var(--tag-yellow);color:var(--tag-yellow-fg)}
+  .kw.red{background:var(--tag-red);color:var(--tag-red-fg)}
+
+  /* ===== Section layout ===== */
+  section{padding:70px 0;scroll-margin-top:90px}
+  .sec-title{text-align:center;margin-bottom:16px;font-size:clamp(30px,4.5vw,44px);font-weight:800;letter-spacing:-0.02em}
+  .sec-sub{text-align:center;max-width:780px;margin:0 auto 50px;color:var(--muted);font-size:15.5px;line-height:1.8}
+
+  /* ===== Stats ===== */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:36px}
+  @media (max-width:760px){.stats{grid-template-columns:1fr}}
+  .stat{
+    background:var(--card);border-radius:20px;padding:50px 20px;
+    text-align:center;box-shadow:var(--shadow);
+    transition:transform .3s, box-shadow .3s;
+  }
+  .stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+  .stat .num{font-size:64px;font-weight:800;color:var(--accent);letter-spacing:-0.03em;line-height:1}
+  .stat .lbl{margin-top:18px;color:var(--muted);font-size:15px;font-weight:500}
+
+  /* ===== Chart ===== */
+  .chart-card{
+    background:var(--card);border-radius:20px;padding:36px 30px 30px;
+    box-shadow:var(--shadow);
+  }
+  .chart-card h3{font-size:17px;font-weight:700;margin-bottom:22px;color:var(--muted);letter-spacing:.01em}
+  .chart-wrap{position:relative;height:280px}
+  .chart-wrap svg{width:100%;height:100%;overflow:visible}
+
+  /* ===== Research Fields (참고자 스타일 - 아이콘 없음) ===== */
+  .fields-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:900px){.fields-grid{grid-template-columns:1fr}}
+  .field{
+    background:var(--card);border-radius:20px;padding:36px 32px;
+    box-shadow:var(--shadow);border:1px solid transparent;
+    transition:transform .3s, box-shadow .3s, border-color .3s;
+    cursor:pointer;
+  }
+  .field:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--accent-2)}
+  .field h3{font-size:20px;font-weight:700;margin-bottom:16px;letter-spacing:-0.01em}
+  .field p{color:var(--muted);font-size:14.5px;line-height:1.7;margin-bottom:18px}
+  .field .meta{
+    font-size:12.5px;color:var(--accent);font-weight:700;
+    padding-top:16px;border-top:1px dashed var(--border);
+  }
+
+  /* ===== Paper list (참고 이미지 스타일) ===== */
+  .toolbar{
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+    flex-wrap:wrap;margin-bottom:22px;
+  }
+  .toolbar .group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .toolbar .label{font-size:13.5px;font-weight:700;color:var(--fg);margin-right:2px}
+  .chip{
+    padding:8px 16px;border-radius:999px;border:1px solid var(--border);
+    background:var(--card);font-size:13.5px;font-weight:600;color:var(--muted);
+    cursor:pointer;transition:.2s;font-family:inherit;
+  }
+  .chip:hover{color:var(--fg);border-color:var(--fg)}
+  .chip.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .sort-sel{
+    padding:8px 34px 8px 14px;border-radius:999px;border:1px solid var(--border);
+    background:var(--card) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%235e6878' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>") no-repeat right 14px center;
+    font-size:13.5px;font-weight:600;color:var(--fg);cursor:pointer;
+    font-family:inherit;appearance:none;-webkit-appearance:none;
+  }
+
+  .paper-list{display:flex;flex-direction:column;gap:12px}
+  .paper{
+    background:var(--card);border-radius:14px;padding:22px 26px;
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+    box-shadow:var(--shadow-sm);
+    transition:transform .2s, box-shadow .2s, border-left-color .2s;
+    border-left:3px solid transparent;
+  }
+  .paper.hidden{display:none}
+  .paper:hover{transform:translateX(4px);box-shadow:var(--shadow);border-left-color:var(--accent)}
+  .paper .t{font-size:15.5px;font-weight:700;line-height:1.5;margin-bottom:6px;color:var(--fg)}
+  .paper .a{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+  .paper .j{font-size:13px;color:var(--muted);font-style:italic}
+  .paper .pill{
+    padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;
+    white-space:nowrap;
+  }
+  .pill.intl{background:#e8ecff;color:#4356d5}
+  .pill.dom{background:#e2f4e6;color:#2a8043}
+  .pill.thesis{background:#fff1d1;color:#8d6413}
+  @media (max-width:700px){
+    .paper{grid-template-columns:1fr;gap:10px}
+    .paper .pill{justify-self:start}
+  }
+
+  /* ===== Books ===== */
+  .books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:900px){.books-grid{grid-template-columns:1fr}}
+  .book{
+    background:var(--card);border-radius:18px;padding:28px;box-shadow:var(--shadow);
+    display:flex;gap:22px;transition:transform .3s;
+  }
+  .book:hover{transform:translateY(-4px)}
+  .book .cover{
+    width:95px;height:135px;border-radius:6px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    font-weight:700;font-size:13px;text-align:center;padding:10px;line-height:1.35;
+    box-shadow:0 4px 14px rgba(103,114,229,.3);
+  }
+  .book .info h4{font-size:16px;font-weight:700;margin-bottom:10px;line-height:1.4;color:var(--accent)}
+  .book .info p{font-size:13px;color:var(--muted);margin-bottom:4px}
+  .book .info p strong{color:var(--fg);font-weight:600}
+
+  /* ===== Skills ===== */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .skill{
+    background:var(--card);border-radius:14px;padding:22px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:6px;
+    transition:transform .3s, box-shadow .3s;
+  }
+  .skill:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .skill .nm{font-weight:700;font-size:15px;color:var(--accent)}
+  .skill .dc{font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* ===== Footer ===== */
+  footer{padding:60px 0 40px;text-align:center;border-top:1px solid var(--border);margin-top:40px}
+  footer p{font-size:13px;color:var(--muted)}
+  footer .sigla{font-weight:700;color:var(--fg);margin-bottom:6px;font-size:15px}
+
+  /* Reveal */
+  .reveal{opacity:1;transform:none}
+  .js .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s, transform .7s}
+  .js .reveal.in{opacity:1;transform:translateY(0)}
+
+  /* EN/KO swap */
+  [data-lang="ko"] .en{display:none}
+  [data-lang="en"] .ko{display:none}
+</style>
+</head>
+<body>
+
+<!-- ===== Nav ===== -->
+<nav>
+  <div class="inner">
+    <div class="brand">
+      <span class="ko">문유미의 포트폴리오</span>
+      <span class="en">Yoo-mi Moon's Portfolio</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#overview" data-sec="overview" class="active"><span class="ko">개요</span><span class="en">Overview</span></a></li>
+      <li><a href="#fields" data-sec="fields"><span class="ko">연구 분야</span><span class="en">Research</span></a></li>
+      <li><a href="#papers" data-sec="papers"><span class="ko">논문 실적</span><span class="en">Papers</span></a></li>
+      <li><a href="#books" data-sec="books"><span class="ko">저서</span><span class="en">Books</span></a></li>
+      <li><a href="#skills" data-sec="skills"><span class="ko">보유 기술</span><span class="en">Skills</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="on" data-lang="ko">Korean</button>
+      <button data-lang="en">English</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <h1 class="reveal">
+      <span class="ko">문유미 <span style="font-weight:700">(Yoo-mi Moon)</span></span>
+      <span class="en">Yoo-mi Moon <span style="font-weight:700">(문유미)</span></span>
+    </h1>
+    <p class="affil reveal">
+      <span class="ko">경기대학교 공학대학원 교수 · 한국재난정보학회 연구소장</span>
+      <span class="en">Professor, Graduate School of Engineering, Kyonggi University · Director, KOSDI Research Institute</span>
+    </p>
+    <div class="contact-row reveal">
+      <a href="mailto:mym1003@kyonggi.ac.kr">
+        <span class="mail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+        mym1003@kyonggi.ac.kr
+      </a>
+      <span class="dot"></span>
+      <a href="https://scholar.google.com" target="_blank" rel="noopener">Google Scholar</a>
+      <span class="dot"></span>
+      <a href="https://orcid.org" target="_blank" rel="noopener">ORCID</a>
+    </div>
+    <div class="keyword-row reveal">
+      <span class="kw blue">감성안전</span>
+      <span class="kw green">위험감수성</span>
+      <span class="kw yellow">스마트플랫폼</span>
+      <span class="kw red">건설안전</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Overview ===== -->
+<section id="overview">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">연구 개요</span>
+      <span class="en">Research Overview</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">본 개요 섹션은 문유미 연구자의 핵심 연구 성과를 시각적으로 요약하여 보여줍니다. 주요 지표를 통해 연구 활동의 규모를 빠르게 파악하고, 연도별 활동 그래프를 통해 연구 성과의 성장 추세를 직관적으로 확인할 수 있습니다.</span>
+      <span class="en">A visual summary of key research outputs, capturing scale and growth over time.</span>
+    </p>
+
+    <div class="stats">
+      <div class="stat reveal"><div class="num">27</div><div class="lbl"><span class="ko">학술지 논문</span><span class="en">Journal Papers</span></div></div>
+      <div class="stat reveal"><div class="num">42</div><div class="lbl"><span class="ko">지도 논문 심사</span><span class="en">Theses Supervised</span></div></div>
+      <div class="stat reveal"><div class="num">3</div><div class="lbl"><span class="ko">저서</span><span class="en">Books</span></div></div>
+    </div>
+
+    <div class="chart-card reveal">
+      <h3><span class="ko">연도별 연구 활동 (학술지 + 지도 논문)</span><span class="en">Research Activity by Year</span></h3>
+      <div class="chart-wrap">
+        <svg viewBox="0 0 820 280" preserveAspectRatio="none" id="chart"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Research Fields ===== -->
+<section id="fields">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">주요 연구 분야</span>
+      <span class="en">Main Research Fields</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">주요 연구 분야를 세 가지 핵심 주제로 나누어 소개합니다. 각 주제는 연구의 목표와 접근 방식을 설명하며, 관련 기술과 대표 논문을 통해 연구 내용에 대한 깊이 있는 이해를 돕습니다. 사용자는 각 주제를 클릭하여 관련된 논문 목록을 바로 확인할 수 있습니다.</span>
+      <span class="en">Three core themes introduce the research goals, approaches, and representative works.</span>
+    </p>
+
+    <div class="fields-grid">
+      <article class="field reveal" onclick="goFilter('emo')">
+        <h3><span class="ko">감성안전 기반 안전행동 연구</span><span class="en">Emotional Safety & Behavior</span></h3>
+        <p>
+          <span class="ko">감성지능·자아존중감 등 심리적 요인이 근로자의 안전·불안전 행동에 미치는 영향을 구조방정식모형(SEM)과 SSEIT 척도로 분석합니다. 감성안전 교육 패러다임 전환의 실증적 근거를 제시하고 현장 교육 효과 향상 방안을 모색합니다.</span>
+          <span class="en">Examines how emotional intelligence and self-esteem shape safe/unsafe behaviors on site using SEM and SSEIT.</span>
+        </p>
+        <div class="meta">SEM · SSEIT · 감성지능 · 안전교육</div>
+      </article>
+      <article class="field reveal" onclick="goFilter('risk')">
+        <h3><span class="ko">위험감수성·위험성평가 고도화</span><span class="en">Risk Sensitivity & Assessment</span></h3>
+        <p>
+          <span class="ko">건설현장의 위험요인과 재해 저감 사이의 관계에서 개인·조직의 위험감수성이 갖는 조절·매개효과를 정량 분석합니다. 대응분석(Correspondence Analysis)과 AHP를 활용해 위험성평가 체계를 고도화하고 관계역량과의 상호작용을 규명합니다.</span>
+          <span class="en">Quantifies how risk sensitivity mediates hazard–incident pathways, using correspondence analysis and AHP.</span>
+        </p>
+        <div class="meta">대응분석 · AHP · 구조방정식 · 관계역량</div>
+      </article>
+      <article class="field reveal" onclick="goFilter('smart')">
+        <h3><span class="ko">스마트 통합 안전관리 플랫폼</span><span class="en">Smart Integrated Safety Platform</span></h3>
+        <p>
+          <span class="ko">건설현장 통합 스마트플랫폼 구축방향, 모바일·IoT 기반 스마트 건설안전시스템의 실효성 검증, YOLO 기반 위험 객체 인식 및 TBM 연계 등 데이터 기반 안전관리 체계 전반을 연구합니다.</span>
+          <span class="en">Integrated smart platform, IoT/mobile safety systems, and YOLO-based hazard detection.</span>
+        </p>
+        <div class="meta">IoT · YOLO · TBM · 위험성평가</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Papers ===== -->
+<section id="papers">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">논문 실적</span>
+      <span class="en">Papers</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">국제 학술지, 국내 학술지, 지도한 석사 학위 논문을 하나의 목록에서 확인할 수 있습니다. 종류별 필터와 정렬 기준을 선택하세요.</span>
+      <span class="en">Browse international journals, domestic journals, and supervised master's theses in one unified list. Filter by type and sort as you like.</span>
+    </p>
+
+    <div class="toolbar reveal">
+      <div class="group">
+        <span class="label"><span class="ko">종류별 필터:</span><span class="en">Filter:</span></span>
+        <button class="chip active" data-pf="all"><span class="ko">전체</span><span class="en">All</span></button>
+        <button class="chip" data-pf="intl"><span class="ko">국제 학술지</span><span class="en">International</span></button>
+        <button class="chip" data-pf="dom"><span class="ko">국내 학술지</span><span class="en">Domestic</span></button>
+        <button class="chip" data-pf="thesis"><span class="ko">학위 논문</span><span class="en">Theses</span></button>
+      </div>
+      <div class="group">
+        <span class="label"><span class="ko">정렬 기준:</span><span class="en">Sort:</span></span>
+        <select class="sort-sel" id="sortSel">
+          <option value="desc"><span>최신순</span></option>
+          <option value="asc"><span>오래된순</span></option>
+        </select>
+      </div>
+    </div>
+
+    <div class="paper-list reveal" id="paperList"></div>
+  </div>
+</section>
+
+<!-- ===== Books ===== -->
+<section id="books">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">저서</span>
+      <span class="en">Books</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">재난안전·건설안전 분야에서 출간한 저서입니다.</span>
+      <span class="en">Authored books in disaster and construction safety.</span>
+    </p>
+
+    <div class="books-grid">
+      <div class="book reveal">
+        <div class="cover">재난안전<br>방재학<br>개론</div>
+        <div class="info">
+          <h4>재난안전 방재학 개론</h4>
+          <p><strong>저자</strong> 문유미</p>
+          <p><strong>출판</strong> 예문사</p>
+          <p>2015.01.20</p>
+        </div>
+      </div>
+      <div class="book reveal">
+        <div class="cover" style="background:linear-gradient(135deg,#2a8043,#6ab37a)">건설<br>안전<br>공학</div>
+        <div class="info">
+          <h4>건설안전공학</h4>
+          <p><strong>저자</strong> 한경보, 최병정 외 3명</p>
+          <p><strong>출판</strong> 예문사</p>
+          <p>2016.03.15</p>
+        </div>
+      </div>
+      <div class="book reveal">
+        <div class="cover" style="background:linear-gradient(135deg,#8d6413,#d49a3a)">건설<br>안전<br>교육론</div>
+        <div class="info">
+          <h4>건설안전 교육론</h4>
+          <p><strong>저자</strong> 문유미, 한경보 외 3명</p>
+          <p><strong>출판</strong> 예문사</p>
+          <p>2015.08.30</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Skills ===== -->
+<section id="skills">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">보유 기술</span>
+      <span class="en">Skills & Methodologies</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">실증 연구에 활용하는 정량·정성 방법론과 스마트 안전관리 기술입니다.</span>
+      <span class="en">Quantitative, qualitative, and smart-safety methodologies applied in research.</span>
+    </p>
+
+    <div class="skills-grid">
+      <div class="skill reveal"><div class="nm">구조방정식모형 (SEM)</div><div class="dc">잠재변수 간 인과 구조 분석</div></div>
+      <div class="skill reveal"><div class="nm">AHP 계층분석</div><div class="dc">의사결정 요소 가중치 평가</div></div>
+      <div class="skill reveal"><div class="nm">델파이 기법</div><div class="dc">전문가 합의 도출</div></div>
+      <div class="skill reveal"><div class="nm">메타분석</div><div class="dc">다수 연구 통합 효과크기 산출</div></div>
+      <div class="skill reveal"><div class="nm">베이지안 네트워크</div><div class="dc">불확실성 기반 위험 추론</div></div>
+      <div class="skill reveal"><div class="nm">대응분석</div><div class="dc">범주형 데이터 이미지 맵핑</div></div>
+      <div class="skill reveal"><div class="nm">YOLO 객체 인식</div><div class="dc">현장 위험 상태 실시간 탐지</div></div>
+      <div class="skill reveal"><div class="nm">스마트 플랫폼</div><div class="dc">IoT·모바일 통합 시스템</div></div>
+      <div class="skill reveal"><div class="nm">SSEIT 감성지능</div><div class="dc">감성안전 척도 타당화</div></div>
+      <div class="skill reveal"><div class="nm">위험성평가 체계</div><div class="dc">공종·업종별 체크리스트</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p class="sigla">Yoo-mi Moon · 문유미</p>
+    <p>© 2026 Kyonggi University · KOSDI Research Institute</p>
+    <p style="margin-top:8px">
+      <a href="mailto:mym1003@kyonggi.ac.kr" style="color:var(--accent)">mym1003@kyonggi.ac.kr</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // ========== Data ==========
+  // type: 'intl' = 국제 학술지, 'dom' = 국내 학술지, 'thesis' = 학위 논문
+  const PAPERS = [
+    {y:2024,t:'대응분석을 통한 안전·불안전 행동 및 위험감수성 이미지 평가에 대한 연구',a:'문유미',s:'한국재난정보학회',type:'dom',tag:['risk','emo']},
+    {y:2022,t:'건설공사 안전보건관리가 안전점검평가 사후관리에 미치는 영향관계',a:'문유미, 신용승, 김진태',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2022,t:'건설현장 실태조사를 통한 안전관리 실명제 중요성에 관한 연구',a:'신연철, 문유미, 김상현',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2024,t:'건설현장 통합 스마트플랫폼 구축방향에 대한 연구',a:'신연철, 문유미',s:'한국재난정보학회',type:'dom',tag:['smart']},
+    {y:2023,t:'건설현장의 아차사고 연결가능성에 대한 패턴분석',a:'김상현, 문유미, 신연철',s:'한국재난정보학회',type:'dom',tag:['risk']},
+    {y:2020,t:'계층분석법을 통한 지하차도 재해 예방 및 제어 시스템 개선 연구',a:'김필도, 김경수, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2024,t:'스마트플랫폼을 활용한 위험성 평가 시스템의 실효성 검증연구',a:'송민용, 김두환, 문유미',s:'한국재난정보학회',type:'dom',tag:['smart','risk']},
+    {y:2021,t:'안전보조원의 안전관리활동이 파견법에 미치는 영향요인 연구',a:'신승하, 문유미, 최병정',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2020,t:'재난피해가능성불안 및 지각된 스트레스가 대피행동에 영향을 미치는 요인',a:'지영일, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2021,t:'일본의 재해활동 문헌고찰을 통한 재해피해가능성불안 우선순위 및 대안도출',a:'김경수, 김필도, 문유미',s:'동아시아일본학회',type:'dom',tag:[]},
+    {y:2024,t:'SSEIT 감성지능모델 측정도구의 신뢰도와 타당성검증',a:'문유미',s:'국가유산방재학회',type:'dom',tag:['emo']},
+    {y:2025,t:'Analysis of Termite Infestation Routes in Urban Hanoks & CESM Performance',a:'신연철, 문유미',s:'건축학회',type:'intl',tag:[]},
+    {y:2025,t:'Impact of Emotional Intelligence Training on Safety Behavior in Construction Sites',a:'김경수, 신연철, 문유미',s:'한국재난정보학회',type:'intl',tag:['emo']},
+    {y:2025,t:'Research on Ways to Build an Integrated Smart Platform for Construction Site Safety',a:'신연철, 문유미',s:'건축학회',type:'intl',tag:['smart']},
+    {y:2025,t:'Generate point clouds with detected object information using YOLOv8s Seg and RTK UAV',a:'조정민 외 5인',s:'측량학회',type:'intl',tag:['smart']},
+    {y:2025,t:'추락사고 예방을 위한 가설재 "안전필수확인점" 필요성 연구',a:'양정민, 박정옥, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
+    {y:2025,t:'델파이 및 교차분석을 통한 건설현장 안전 업무의 행정 이원화와 직무 난이도 간 상관관계 연구',a:'김찬원, 양정민, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2025,t:'공동주택 재도장공사 위험요인 분석 및 위험성평가 체크리스트 활용 연구',a:'장원준, 형성한, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
+    {y:2025,t:'건설현장 위험감수성이 작업자의 안전·불안전 행동에 미치는 상관관계 분석',a:'박정옥, 김찬원, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
+    {y:2026,t:'스마트 프로그램을 활용한 밀폐공간 질식사고 예방 방안',a:'정준, 황정하, 문유미',s:'한국재난정보학회',type:'dom',tag:['smart']},
+    {y:2026,t:'건설현장 근로자의 감성안전 구성요인의 구조적 관계 분석 연구',a:'하태운, 서귀원, 문유미',s:'한국재난정보학회',type:'dom',tag:['emo']},
+    {y:2026,t:'AHP 기반 분석을 통한 초등학교 학교공간혁신 요소의 구조적 특성 해석',a:'황정하, 정준, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2026,t:'AHP 분석을 통한 파일항타기 작업 위험성평가 개선방안 연구: 전도 사고 예방 중심',a:'김정수, 윤수한, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
+    {y:2026,t:'건설현장 스마트기술특성이 안전성과에 미치는 영향',a:'윤수한, 김정수, 문유미',s:'한국재난정보학회',type:'dom',tag:['smart']},
+    {y:2026,t:'도심지 범죄예방 환경설계(CPTED)의 특성 변화와 발전 방향에 관한 연구',a:'김예성, 주OO, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
+    {y:2026,t:'감성안전(지능)척도의 요인 구조 및 타당도 탐색을 위한 연구',a:'문유미',s:'한국재난정보학회',type:'dom',tag:['emo']},
+    {y:2026,t:'건설현장 관계역량과 위험감수성의 상호작용이 안전행동 결정에 미치는 영향',a:'서귀원, 하태윤, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']}
+  ];
+
+  const THESES = [
+    {n:1,y:2018,t:'감성요인과 자아존중감이 안전 및 불안전행동에 미치는 영향요인',a:'김경수'},
+    {n:2,y:2018,t:'도심지 장대 지하차도 안전 패러다임 변화에 관한 연구',a:'김필도'},
+    {n:3,y:2019,t:'재해예방 저해요소와 재해특성의 관계에서 재해예방 기술지도의 매개효과',a:'임래언'},
+    {n:4,y:2019,t:'초고층 건물의 시공 기술사례를 통한 일반 건물과 비교 연구',a:'최봉준'},
+    {n:5,y:2019,t:'치유관점에서 본 실내건축 공간특성',a:'여수진'},
+    {n:6,y:2019,t:'공동주택 입주민의 주거환경 특성에 영향을 미치는 요인',a:'지영일'},
+    {n:7,y:2019,t:'건설업 근로자의 라이프 스타일과 안전 및 불안전 행동간의 연관성',a:'이상미'},
+    {n:8,y:2019,t:'중소규모 건설현장의 재해예방 기술지도가 재해모델에 미치는 영향요인',a:'임동준'},
+    {n:9,y:2019,t:'건설현장의 건설사업관리업무 개선을 통한 부실공사 및 안전사고 예방 연구',a:'우상돈'},
+    {n:10,y:2020,t:'메가 프로젝트현장 안전보조원의 위험발굴특성이 재해에 미치는 영향',a:'신승하'},
+    {n:11,y:2020,t:'타워크레인 법제도개선이 중대재해예방에 미치는 영향',a:'남병국'},
+    {n:12,y:2020,t:'감성안전 인식 수준이 안전교육 패러다임 변화에 미치는 영향 요인',a:'김용훈'},
+    {n:13,y:2020,t:'중·소규모 현장의 산업안전보건관리비 계상기준과 재해발생 요인의 연관성 분석',a:'김기태'},
+    {n:14,y:2021,t:'건설현장의 재해요인이 안전문화에 미치는 영향요인',a:'김연건'},
+    {n:15,y:2021,t:'재해저감에 미치는 설계단계 DFS 활성화의 중요성',a:'박기춘'},
+    {n:16,y:2021,t:'안전교육 역량이 교육정책에 미치는 위계적 관계',a:'정기홍'},
+    {n:17,y:2021,t:'건설 사업관리 업무와 부실공사저감 간의 연관성 연구',a:'김용환'},
+    {n:18,y:2021,t:'건설현장 5M 활용을 위한 Mission이 안전관리강화에 미치는 영향',a:'이재일'},
+    {n:19,y:2021,t:'신종업종 화재위험평가의 영향요인 분석',a:'이승호'},
+    {n:20,y:2021,t:'스마트건설기술 BIM 활성화 방안에 대한 연구: 델파이기법 중심',a:'조경원'},
+    {n:21,y:2021,t:'건설업역 개편방안 가중치평가 및 유지관리시장 대응방향에 관한 연구',a:'조명재'},
+    {n:22,y:2021,t:'중·소 건설현장 재해예방을 위한 공종별 위험체감도 및 안전중요도에 관한 연구',a:'김선태'},
+    {n:23,y:2021,t:'건설현장 위험요인과 재해 저감의 관계에서 스마트폰 위험성평가의 조절효과',a:'남귀성'},
+    {n:24,y:2021,t:'학교공간혁신 AHP 기반의 공간특성 중요도 연구: 청원초등학교 중심',a:'황정하'},
+    {n:25,y:2022,t:'언택트 행태와 도시공간 변화에 따른 주거공간 구성의 연관성',a:'윤정희'},
+    {n:26,y:2023,t:'스마트 안전관리 시스템을 통한 위험성평가와 TBM간의 안전모형 연구',a:'김만기'},
+    {n:27,y:2023,t:'스마트 건설안전관리 시스템이 위험대응에 미치는 영향에 관한 연구',a:'김기성'},
+    {n:28,y:2023,t:'모바일을 활용한 스마트 건설안전시스템 특성이 실효성에 미치는 영향',a:'송민용'},
+    {n:29,y:2023,t:'분류분석을 이용한 CM 업무와 스마트 건설 안전관리시스템의 연관성 연구',a:'이승호'},
+    {n:30,y:2024,t:'해체공사 위험성 평가 체크리스트 개발 연구',a:'형성한'},
+    {n:31,y:2024,t:'공동주택 유지보수공사의 공종별 위험성평가 활용에 대한 연구',a:'장원준'},
+    {n:32,y:2024,t:'5대 건설기계의 단계별 위험성 평가에 대한 스마트 안전관리 시스템 적용의 영향',a:'이문배'},
+    {n:33,y:2025,t:'건설현장 위험감수성이 안전·불안전 행동에 미치는 영향',a:'박정옥'},
+    {n:34,y:2025,t:'건설현장 안전업무 일원화와 직무특성간의 상호작용 연구',a:'김찬원'},
+    {n:35,y:2025,t:'한국과 일본의 가설재 제도 비교를 통한 가설안전감리 도입 제안 연구',a:'양정민'},
+    {n:36,y:2025,t:'건설안전교육이 학습전이를 통해 안전성과에 미치는 영향',a:'이현숙'},
+    {n:37,y:2025,t:'YOLO 모델별 위험 상태 및 객체 인식 성능 비교',a:'박종학'},
+    {n:38,y:2026,t:'베이지안 네트워크 기반 모듈러 시공 위험성 분석 및 안전관리 개선 방안',a:'박용민'},
+    {n:39,y:2026,t:'건설업 협력업체 안전관리수준 향상을 위한 제도개선 방안연구',a:'허준영'},
+    {n:40,y:2026,t:'메타분석을 통한 관리감독자 제도의 작동성 분석 및 개선방안연구',a:'양성모'},
+    {n:41,y:2026,t:'중소규모 건축물 설계·감리통합과정에서의 안전관리기능 수행 실태 및 개선방안연구',a:'나홍남'},
+    {n:42,y:2026,t:'건설하자 소송과 중대재해처벌법 판례분석을 통한 법적책임 및 예방체계 비교연구',a:'문준성'}
+  ];
+
+  // ========== Merge & Render ==========
+  // 통합 데이터: PAPERS + THESES
+  const ALL = [
+    ...PAPERS,
+    ...THESES.map(th => ({
+      y: th.y,
+      t: th.t,
+      a: '지도제자 · ' + th.a,
+      s: '경기대학교 공학대학원',
+      type: 'thesis',
+      tag: []
+    }))
+  ];
+
+  const PILL_LABEL = {intl:'국제 학술지', dom:'국내 학술지', thesis:'학위 논문'};
+
+  let curFilter = 'all';
+  let curSort = 'desc'; // 'desc' 최신순, 'asc' 오래된순
+
+  function renderPapers(){
+    const list = document.getElementById('paperList');
+    let items = [...ALL];
+    if(curFilter !== 'all') items = items.filter(p => p.type === curFilter);
+    items.sort((a,b) => curSort === 'desc' ? b.y - a.y : a.y - b.y);
+
+    list.innerHTML = items.map(p => `
+      <div class="paper" data-type="${p.type}">
+        <div>
+          <div class="t">${p.t}</div>
+          <div class="a">${p.a}</div>
+          <div class="j">${p.s}, ${p.y}</div>
+        </div>
+        <div class="pill ${p.type}">${PILL_LABEL[p.type]}</div>
+      </div>
+    `).join('');
+  }
+
+  // ========== Chart (참고자 스타일 - 큰 단일 색 바 차트) ==========
+  function renderChart(){
+    const yearStats = {};
+    PAPERS.forEach(p => { yearStats[p.y] = (yearStats[p.y]||0) + 1; });
+    THESES.forEach(p => { yearStats[p.y] = (yearStats[p.y]||0) + 1; });
+    const years = Object.keys(yearStats).map(Number).sort();
+    const max = Math.max(...years.map(y => yearStats[y]));
+    const niceMax = Math.ceil(max/5)*5;
+    const W = 820, H = 280, pad = {l:44, r:20, t:20, b:40};
+    const iw = W - pad.l - pad.r;
+    const ih = H - pad.t - pad.b;
+    const bw = iw / years.length;
+    const bwi = bw * 0.55;
+
+    let svg = '';
+    // gridlines
+    for(let i=0;i<=5;i++){
+      const y = pad.t + (ih * i / 5);
+      const val = Math.round(niceMax - (niceMax * i / 5));
+      svg += `<line x1="${pad.l}" y1="${y}" x2="${W - pad.r}" y2="${y}" stroke="#eceff7" stroke-width="1"/>`;
+      svg += `<text x="${pad.l - 10}" y="${y + 4}" text-anchor="end" font-size="12" fill="#8690a3">${val}</text>`;
+    }
+    // bars
+    years.forEach((yr, i) => {
+      const count = yearStats[yr];
+      const bx = pad.l + bw * i + (bw - bwi)/2;
+      const bh = (count / niceMax) * ih;
+      const by = pad.t + ih - bh;
+      svg += `<rect x="${bx}" y="${by}" width="${bwi}" height="${bh}" fill="#a4acf0" rx="4"><title>${yr}: ${count}편</title></rect>`;
+      svg += `<text x="${bx + bwi/2}" y="${H - pad.b + 22}" text-anchor="middle" font-size="13" fill="#5e6878" font-weight="500">${yr}</text>`;
+      svg += `<text x="${bx + bwi/2}" y="${by - 8}" text-anchor="middle" font-size="12" font-weight="700" fill="#6772e5">${count}</text>`;
+    });
+    document.getElementById('chart').innerHTML = svg;
+  }
+
+  // ========== Jump from field card to paper filter ==========
+  function goFilter(tag){
+    // 주제 태그로 필터 (국내/국제/학위 통합 중 태그 포함)
+    curFilter = 'all';
+    document.querySelectorAll('[data-pf]').forEach(c => c.classList.toggle('active', c.dataset.pf === 'all'));
+    document.getElementById('papers').scrollIntoView({behavior:'smooth'});
+    // 태그 하이라이트 (직접 필터 적용)
+    const list = document.getElementById('paperList');
+    const items = [...ALL].filter(p => p.tag && p.tag.includes(tag))
+      .sort((a,b) => curSort === 'desc' ? b.y - a.y : a.y - b.y);
+    list.innerHTML = items.map(p => `
+      <div class="paper" data-type="${p.type}">
+        <div>
+          <div class="t">${p.t}</div>
+          <div class="a">${p.a}</div>
+          <div class="j">${p.s}, ${p.y}</div>
+        </div>
+        <div class="pill ${p.type}">${PILL_LABEL[p.type]}</div>
+      </div>
+    `).join('');
+  }
+
+  // ========== Init ==========
+  function safe(fn){ try{ fn(); }catch(e){ console.warn(e); } }
+  document.documentElement.classList.add('js');
+
+  safe(renderPapers);
+  safe(renderChart);
+
+  // Lang toggle
+  function setLang(lang){
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('.lang-toggle button').forEach(x => x.classList.toggle('on', x.dataset.lang === lang));
+  }
+  safe(() => {
+    document.querySelectorAll('.lang-toggle button').forEach(b => {
+      b.addEventListener('click', () => setLang(b.dataset.lang));
+    });
+  });
+
+  // Reveal on scroll
+  safe(() => {
+    const targets = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ targets.forEach(t => t.classList.add('in')); return; }
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.08});
+    targets.forEach(t => io.observe(t));
+    setTimeout(() => targets.forEach(t => t.classList.add('in')), 2500);
+  });
+
+  // Nav active section
+  safe(() => {
+    const links = document.querySelectorAll('.nav-links a');
+    const ids = ['overview','fields','papers','books','skills'];
+    const secs = ids.map(id => document.getElementById(id)).filter(Boolean);
+    window.addEventListener('scroll', () => {
+      let cur = 'overview';
+      const y = window.scrollY + window.innerHeight * 0.3;
+      secs.forEach(s => { if(s.offsetTop <= y) cur = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.dataset.sec === cur));
+    });
+  });
+
+  // Paper type filters
+  safe(() => {
+    document.querySelectorAll('[data-pf]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('[data-pf]').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        curFilter = chip.dataset.pf;
+        renderPapers();
+      });
+    });
+  });
+
+  // Sort dropdown
+  safe(() => {
+    const sel = document.getElementById('sortSel');
+    if(sel){
+      sel.addEventListener('change', () => {
+        curSort = sel.value;
+        renderPapers();
+      });
+    }
+  });
+</script>
+</body>
+</html>
