@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yoo-mi Moon - Interactive Research Portfolio</title>
-<meta name="description" content="문유미 교수 연구 포트폴리오 · 경기대학교 · 한국재난정보학회 연구소장" />
+<title>Yoo-mi Moon · C-SENSE Lab — Interactive Research Portfolio</title>
+<meta name="description" content="문유미 교수 연구 포트폴리오 · 경기대학교 일반대학원 건설안전전공 · C-SENSE Lab(Contextual Safety Engineering & Networked Semantic Entity) · 한국재난정보학회 연구소장" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -25,6 +25,10 @@
     --tag-green:#e2f4e6; --tag-green-fg:#2a8043;
     --tag-yellow:#fff1d1; --tag-yellow-fg:#8d6413;
     --tag-red:#ffe1e7;   --tag-red-fg:#b93152;
+    --tag-ai:#ece6ff;    --tag-ai-fg:#5b3cc4;
+    --tag-purple:#f3e8ff;--tag-purple-fg:#7c3aed;
+    --tag-teal:#d6f5ef;  --tag-teal-fg:#0e8f78;
+    --csense-grad: linear-gradient(135deg,#5b3cc4 0%,#6772e5 50%,#0e8f78 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -99,6 +103,94 @@
   .kw.green{background:var(--tag-green);color:var(--tag-green-fg)}
   .kw.yellow{background:var(--tag-yellow);color:var(--tag-yellow-fg)}
   .kw.red{background:var(--tag-red);color:var(--tag-red-fg)}
+  .kw.ai{background:var(--tag-ai);color:var(--tag-ai-fg)}
+  .kw.purple{background:var(--tag-purple);color:var(--tag-purple-fg)}
+  .kw.teal{background:var(--tag-teal);color:var(--tag-teal-fg)}
+
+  /* C-SENSE Lab tagline under hero */
+  .lab-line{
+    display:inline-flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;
+    padding:10px 18px;margin:0 auto 28px;border-radius:999px;
+    background:rgba(103,114,229,0.07);border:1px solid var(--accent-2);
+  }
+  .lab-badge{
+    background:var(--csense-grad);color:#fff;padding:4px 12px;border-radius:999px;
+    font-weight:800;font-size:13px;letter-spacing:0.04em;
+    box-shadow:0 4px 14px rgba(91,60,196,.28);
+  }
+  .lab-expand{font-size:13.5px;color:var(--muted);font-weight:600;letter-spacing:.01em}
+
+  /* C-SENSE Lab section */
+  #csense .csense-card{
+    background:var(--card);border-radius:24px;
+    box-shadow:var(--shadow);overflow:hidden;
+    border:1px solid var(--border);
+  }
+  #csense .csense-head{
+    padding:36px 36px 28px;background:var(--csense-grad);color:#fff;position:relative;
+  }
+  #csense .csense-head::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 85% 25%, rgba(255,255,255,.18), transparent 55%),
+               radial-gradient(circle at 15% 85%, rgba(255,255,255,.10), transparent 55%);
+    pointer-events:none;
+  }
+  #csense .csense-head h3{font-size:30px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px;position:relative}
+  #csense .csense-head p{font-size:14.5px;opacity:.92;position:relative;line-height:1.7}
+  #csense .csense-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  }
+  @media (max-width:900px){#csense .csense-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){#csense .csense-grid{grid-template-columns:1fr}}
+  #csense .csense-cell{
+    padding:28px 26px;border-right:1px solid var(--border);border-top:1px solid var(--border);
+    transition:background .25s;
+  }
+  #csense .csense-cell:hover{background:var(--accent-soft)}
+  #csense .csense-cell:last-child{border-right:0}
+  #csense .csense-cell .letter{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:10px;
+    background:var(--csense-grad);color:#fff;font-weight:800;font-size:18px;
+    margin-bottom:14px;box-shadow:0 4px 12px rgba(91,60,196,.25);
+  }
+  #csense .csense-cell h4{font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-0.01em}
+  #csense .csense-cell .sub{font-size:12.5px;color:var(--accent);font-weight:700;margin-bottom:10px;letter-spacing:.02em}
+  #csense .csense-cell p{font-size:13.5px;color:var(--muted);line-height:1.65}
+  #csense .csense-pillars{
+    padding:30px 36px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+    border-top:1px solid var(--border);background:#fafbff;
+  }
+  #csense .csense-pillars .label{font-size:12.5px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+  #csense .pill-tech{
+    padding:7px 14px;border-radius:999px;font-size:12.5px;font-weight:700;
+    background:#fff;border:1px solid var(--border);color:var(--fg);
+  }
+  #csense .pill-tech.hi{background:var(--csense-grad);color:#fff;border-color:transparent}
+
+  /* Research direction roadmap */
+  .roadmap{
+    background:var(--card);border-radius:20px;padding:30px 32px;box-shadow:var(--shadow);
+    margin-top:30px;
+  }
+  .roadmap h3{font-size:17px;font-weight:700;color:var(--muted);margin-bottom:22px}
+  .roadmap-track{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+  @media (max-width:760px){.roadmap-track{grid-template-columns:1fr}}
+  .roadmap-step{
+    padding:0 22px 0 26px;position:relative;
+  }
+  .roadmap-step::before{
+    content:"";position:absolute;top:8px;left:0;width:14px;height:14px;border-radius:50%;
+    background:var(--csense-grad);box-shadow:0 0 0 4px rgba(103,114,229,.12);
+  }
+  .roadmap-step h4{font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  .roadmap-step .ttl{font-size:15.5px;font-weight:700;margin-bottom:8px;line-height:1.45}
+  .roadmap-step p{font-size:13px;color:var(--muted);line-height:1.65}
+  .roadmap-step:not(:last-child)::after{
+    content:"";position:absolute;top:14px;left:14px;right:0;height:2px;
+    background:linear-gradient(to right, var(--accent-2), transparent);
+  }
+  @media (max-width:760px){.roadmap-step:not(:last-child)::after{display:none}}
 
   /* ===== Section layout ===== */
   section{padding:70px 0;scroll-margin-top:90px}
@@ -240,11 +332,12 @@
 <nav>
   <div class="inner">
     <div class="brand">
-      <span class="ko">문유미의 포트폴리오</span>
-      <span class="en">Yoo-mi Moon's Portfolio</span>
+      <span class="ko">문유미 · C-SENSE Lab</span>
+      <span class="en">Yoo-mi Moon · C-SENSE Lab</span>
     </div>
     <ul class="nav-links">
       <li><a href="#overview" data-sec="overview" class="active"><span class="ko">개요</span><span class="en">Overview</span></a></li>
+      <li><a href="#csense" data-sec="csense"><span class="ko">C-SENSE Lab</span><span class="en">C-SENSE Lab</span></a></li>
       <li><a href="#fields" data-sec="fields"><span class="ko">연구 분야</span><span class="en">Research</span></a></li>
       <li><a href="#papers" data-sec="papers"><span class="ko">논문 실적</span><span class="en">Papers</span></a></li>
       <li><a href="#books" data-sec="books"><span class="ko">저서</span><span class="en">Books</span></a></li>
@@ -265,13 +358,21 @@
       <span class="en">Yoo-mi Moon <span style="font-weight:700">(문유미)</span></span>
     </h1>
     <p class="affil reveal">
-      <span class="ko">경기대학교 공학대학원 교수 · 한국재난정보학회 연구소장</span>
-      <span class="en">Professor, Graduate School of Engineering, Kyonggi University · Director, KOSDI Research Institute</span>
+      <span class="ko">경기대학교 일반대학원 <strong style="color:var(--accent)">건설안전전공</strong> 교수 · 한국재난정보학회 연구소장</span>
+      <span class="en">Professor, <strong style="color:var(--accent)">Construction Safety</strong>, Graduate School, Kyonggi University · Director, KOSDI Research Institute</span>
+    </p>
+    <p class="lab-line reveal">
+      <span class="lab-badge">C-SENSE Lab</span>
+      <span class="lab-expand"><span class="ko">Contextual Safety Engineering &amp; Networked Semantic Entity</span><span class="en">Contextual Safety Engineering &amp; Networked Semantic Entity</span></span>
     </p>
     <div class="contact-row reveal">
       <a href="mailto:mym1003@kyonggi.ac.kr">
         <span class="mail-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
         mym1003@kyonggi.ac.kr
+      </a>
+      <span class="dot"></span>
+      <a href="https://mym1003-cloud.github.io/mym1003_cloud/" target="_blank" rel="noopener">
+        <span class="ko">연구 포트폴리오</span><span class="en">Research Portfolio</span>
       </a>
       <span class="dot"></span>
       <a href="https://scholar.google.com" target="_blank" rel="noopener">Google Scholar</a>
@@ -283,6 +384,92 @@
       <span class="kw green">위험감수성</span>
       <span class="kw yellow">스마트플랫폼</span>
       <span class="kw red">건설안전</span>
+      <span class="kw ai">AI · 인공지능</span>
+      <span class="kw purple">컨텍스트 안전공학</span>
+      <span class="kw teal">시맨틱 네트워크</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== C-SENSE Lab ===== -->
+<section id="csense">
+  <div class="container">
+    <h2 class="sec-title reveal">
+      <span class="ko">C-SENSE Lab</span>
+      <span class="en">C-SENSE Lab</span>
+    </h2>
+    <p class="sec-sub reveal">
+      <span class="ko">Contextual Safety Engineering &amp; Networked Semantic Entity — 건설현장의 맥락(Context) 정보를 인공지능과 시맨틱 네트워크로 연결하여, "사람·환경·작업"을 하나의 의미체(Semantic Entity)로 해석하는 차세대 안전공학 연구실입니다. 기존 감성안전·위험감수성·스마트플랫폼 연구를 AI 기반 컨텍스트 추론으로 확장합니다.</span>
+      <span class="en">Connecting site context with AI-driven semantic networks to interpret people, environments, and tasks as a single safety entity — extending emotional safety, risk sensitivity, and smart platforms with contextual AI reasoning.</span>
+    </p>
+
+    <div class="csense-card reveal">
+      <div class="csense-head">
+        <h3>C · S · E · N · S · E</h3>
+        <p>
+          <span class="ko">C-SENSE는 현장 감각(Sense)을 데이터로 코드화하고, 컨텍스트(Context)와 시맨틱(Semantic) 관계로 재구성해 안전을 "예측 가능한 의미 구조"로 만드는 것을 목표로 합니다.</span>
+          <span class="en">C-SENSE codifies on-site senses into data and restructures them into contextual, semantic relations — turning safety into a predictable meaning structure.</span>
+        </p>
+      </div>
+
+      <div class="csense-grid">
+        <div class="csense-cell">
+          <div class="letter">C</div>
+          <div class="sub">CONTEXTUAL</div>
+          <h4><span class="ko">맥락 인식</span><span class="en">Contextual</span></h4>
+          <p><span class="ko">공종·공정·환경·심리 변수를 시간축에서 결합하여 위험 발생의 "상황"을 모델링합니다.</span><span class="en">Combines work, process, and psychological variables on a temporal axis to model hazard contexts.</span></p>
+        </div>
+        <div class="csense-cell">
+          <div class="letter">S</div>
+          <div class="sub">SAFETY</div>
+          <h4><span class="ko">안전공학</span><span class="en">Safety Engineering</span></h4>
+          <p><span class="ko">감성안전·위험감수성·관계역량을 정량화한 SEM/AHP 기반 안전 의사결정 체계를 설계합니다.</span><span class="en">Designs SEM/AHP-based decision systems quantifying emotional safety, risk sensitivity, and relational competence.</span></p>
+        </div>
+        <div class="csense-cell">
+          <div class="letter">N</div>
+          <div class="sub">NETWORKED</div>
+          <h4><span class="ko">네트워크 연결</span><span class="en">Networked</span></h4>
+          <p><span class="ko">IoT·모바일·드론·BIM·CCTV 데이터를 단일 그래프 구조로 통합한 스마트 통합 플랫폼을 운영합니다.</span><span class="en">Unifies IoT, mobile, UAV, BIM, and CCTV streams into a single graph structure.</span></p>
+        </div>
+        <div class="csense-cell">
+          <div class="letter">SE</div>
+          <div class="sub">SEMANTIC ENTITY</div>
+          <h4><span class="ko">시맨틱 의미체</span><span class="en">Semantic Entity</span></h4>
+          <p><span class="ko">YOLO·LLM·지식그래프로 작업자·장비·위험상태를 의미 단위로 식별하고 추론합니다.</span><span class="en">Identifies workers, equipment, and hazards as semantic units via YOLO, LLM, and knowledge graphs.</span></p>
+        </div>
+      </div>
+
+      <div class="csense-pillars">
+        <span class="label"><span class="ko">핵심 기술 스택</span><span class="en">Core Stack</span></span>
+        <span class="pill-tech hi">YOLOv8 · Vision AI</span>
+        <span class="pill-tech hi">LLM · Multimodal</span>
+        <span class="pill-tech">Knowledge Graph</span>
+        <span class="pill-tech">Bayesian Network</span>
+        <span class="pill-tech">SEM · AHP</span>
+        <span class="pill-tech">IoT · UAV · BIM</span>
+        <span class="pill-tech">SSEIT 감성지능</span>
+      </div>
+    </div>
+
+    <div class="roadmap reveal">
+      <h3><span class="ko">연구 확장 로드맵 — 감성안전에서 컨텍스트 AI 안전공학으로</span><span class="en">Research Roadmap — From Emotional Safety to Contextual AI</span></h3>
+      <div class="roadmap-track">
+        <div class="roadmap-step">
+          <h4>Phase 1 · ~2023</h4>
+          <div class="ttl"><span class="ko">감성안전 · 위험감수성 정립</span><span class="en">Emotional Safety Foundations</span></div>
+          <p><span class="ko">SSEIT 척도 타당화, 감성지능–안전행동 SEM 분석으로 인적 요인을 정량화한 시기.</span><span class="en">Validating SSEIT and quantifying emotional intelligence ↔ safe behavior via SEM.</span></p>
+        </div>
+        <div class="roadmap-step">
+          <h4>Phase 2 · 2024–2025</h4>
+          <div class="ttl"><span class="ko">스마트 플랫폼 · YOLO 위험탐지</span><span class="en">Smart Platforms &amp; YOLO</span></div>
+          <p><span class="ko">모바일/IoT 기반 위험성평가 실효성 검증, YOLOv8 객체 인식, UAV 포인트클라우드 연계.</span><span class="en">Mobile/IoT risk assessment validation, YOLOv8 detection, and UAV point-cloud linkage.</span></p>
+        </div>
+        <div class="roadmap-step">
+          <h4>Phase 3 · 2026 →</h4>
+          <div class="ttl"><span class="ko">컨텍스트 AI · 시맨틱 안전 추론</span><span class="en">Contextual AI &amp; Semantic Reasoning</span></div>
+          <p><span class="ko">멀티모달 LLM·지식그래프로 현장 맥락을 해석하고, 베이지안 네트워크로 사고 시나리오를 예측하는 단계.</span><span class="en">Multimodal LLMs and knowledge graphs interpret site context; Bayesian networks forecast incident scenarios.</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -322,34 +509,42 @@
       <span class="en">Main Research Fields</span>
     </h2>
     <p class="sec-sub reveal">
-      <span class="ko">주요 연구 분야를 세 가지 핵심 주제로 나누어 소개합니다. 각 주제는 연구의 목표와 접근 방식을 설명하며, 관련 기술과 대표 논문을 통해 연구 내용에 대한 깊이 있는 이해를 돕습니다. 사용자는 각 주제를 클릭하여 관련된 논문 목록을 바로 확인할 수 있습니다.</span>
-      <span class="en">Three core themes introduce the research goals, approaches, and representative works.</span>
+      <span class="ko">C-SENSE Lab의 연구는 인간 요인(감성안전·위험감수성)에서 출발하여 스마트 통합 플랫폼을 거쳐 <strong style="color:var(--accent)">AI·시맨틱 컨텍스트 추론</strong>으로 확장되고 있습니다. 네 가지 트랙은 서로 단절된 주제가 아니라 "사람 → 시스템 → 컨텍스트 → 의미"로 이어지는 하나의 연구 파이프라인입니다.</span>
+      <span class="en">From human factors to smart platforms and now contextual AI reasoning — four tracks forming one pipeline: people → systems → context → meaning.</span>
     </p>
 
     <div class="fields-grid">
       <article class="field reveal" onclick="goFilter('emo')">
-        <h3><span class="ko">감성안전 기반 안전행동 연구</span><span class="en">Emotional Safety & Behavior</span></h3>
+        <h3><span class="ko">① 감성안전 기반 안전행동</span><span class="en">① Emotional Safety &amp; Behavior</span></h3>
         <p>
-          <span class="ko">감성지능·자아존중감 등 심리적 요인이 근로자의 안전·불안전 행동에 미치는 영향을 구조방정식모형(SEM)과 SSEIT 척도로 분석합니다. 감성안전 교육 패러다임 전환의 실증적 근거를 제시하고 현장 교육 효과 향상 방안을 모색합니다.</span>
-          <span class="en">Examines how emotional intelligence and self-esteem shape safe/unsafe behaviors on site using SEM and SSEIT.</span>
+          <span class="ko">감성지능·자아존중감 등 심리적 요인이 근로자의 안전·불안전 행동에 미치는 영향을 구조방정식모형(SEM)과 SSEIT 척도로 분석합니다. 향후 LLM 기반 텍스트 분석으로 안전교육 발화 데이터를 정량화하여 감성안전 척도를 고도화합니다.</span>
+          <span class="en">SEM and SSEIT-based analysis of emotional drivers; LLM-based text analysis extends the SSEIT scale.</span>
         </p>
-        <div class="meta">SEM · SSEIT · 감성지능 · 안전교육</div>
+        <div class="meta">SEM · SSEIT · LLM 텍스트분석 · 감성지능</div>
       </article>
       <article class="field reveal" onclick="goFilter('risk')">
-        <h3><span class="ko">위험감수성·위험성평가 고도화</span><span class="en">Risk Sensitivity & Assessment</span></h3>
+        <h3><span class="ko">② 위험감수성·위험성평가 고도화</span><span class="en">② Risk Sensitivity &amp; Assessment</span></h3>
         <p>
-          <span class="ko">건설현장의 위험요인과 재해 저감 사이의 관계에서 개인·조직의 위험감수성이 갖는 조절·매개효과를 정량 분석합니다. 대응분석(Correspondence Analysis)과 AHP를 활용해 위험성평가 체계를 고도화하고 관계역량과의 상호작용을 규명합니다.</span>
-          <span class="en">Quantifies how risk sensitivity mediates hazard–incident pathways, using correspondence analysis and AHP.</span>
+          <span class="ko">위험요인과 재해 저감 사이에서 개인·조직 위험감수성의 조절·매개효과를 정량화합니다. 대응분석·AHP·베이지안 네트워크를 결합해 사고 시나리오를 확률적으로 추론하는 위험성평가 체계로 진화시키고 있습니다.</span>
+          <span class="en">Quantifying risk sensitivity as a moderator/mediator and combining correspondence analysis, AHP, and Bayesian networks for probabilistic hazard scenarios.</span>
         </p>
-        <div class="meta">대응분석 · AHP · 구조방정식 · 관계역량</div>
+        <div class="meta">대응분석 · AHP · 베이지안 네트워크 · 관계역량</div>
       </article>
       <article class="field reveal" onclick="goFilter('smart')">
-        <h3><span class="ko">스마트 통합 안전관리 플랫폼</span><span class="en">Smart Integrated Safety Platform</span></h3>
+        <h3><span class="ko">③ 스마트 통합 안전관리 플랫폼</span><span class="en">③ Smart Integrated Safety Platform</span></h3>
         <p>
-          <span class="ko">건설현장 통합 스마트플랫폼 구축방향, 모바일·IoT 기반 스마트 건설안전시스템의 실효성 검증, YOLO 기반 위험 객체 인식 및 TBM 연계 등 데이터 기반 안전관리 체계 전반을 연구합니다.</span>
-          <span class="en">Integrated smart platform, IoT/mobile safety systems, and YOLO-based hazard detection.</span>
+          <span class="ko">모바일·IoT·UAV·BIM 데이터를 단일 그래프로 통합하는 통합 스마트플랫폼을 설계하고, YOLOv8 기반 위험 객체 인식과 RTK UAV 포인트클라우드를 연계해 현장 위험을 실시간으로 가시화합니다.</span>
+          <span class="en">Unified smart platform integrating mobile, IoT, UAV, and BIM streams with YOLOv8 detection and RTK UAV point clouds.</span>
         </p>
-        <div class="meta">IoT · YOLO · TBM · 위험성평가</div>
+        <div class="meta">IoT · YOLOv8 · UAV · BIM</div>
+      </article>
+      <article class="field reveal" onclick="goFilter('ai')" style="border-color:var(--accent-2);background:linear-gradient(160deg,#fff 60%,#f3f1ff 100%)">
+        <h3><span class="ko">④ AI · 컨텍스트 시맨틱 안전공학 <span style="font-size:11px;background:var(--csense-grad);color:#fff;padding:3px 8px;border-radius:6px;vertical-align:middle;margin-left:6px">NEW</span></span><span class="en">④ AI · Contextual Semantic Safety <span style="font-size:11px;background:var(--csense-grad);color:#fff;padding:3px 8px;border-radius:6px;vertical-align:middle;margin-left:6px">NEW</span></span></h3>
+        <p>
+          <span class="ko">멀티모달 LLM·Vision AI·지식그래프를 융합해 작업자·환경·작업의 의미적 관계를 추론합니다. C-SENSE Lab의 핵심 확장 영역으로, "어떤 상황에서 어떤 위험이 어떻게 발생하는가"를 의미 단위로 설명·예측하는 차세대 안전 AI를 연구합니다.</span>
+          <span class="en">Multimodal LLMs, Vision AI, and knowledge graphs reason over worker–environment–task relations to explain and forecast hazards as semantic units.</span>
+        </p>
+        <div class="meta">Multimodal LLM · Vision AI · Knowledge Graph · Contextual Reasoning</div>
       </article>
     </div>
   </div>
@@ -449,10 +644,13 @@
       <div class="skill reveal"><div class="nm">AHP 계층분석</div><div class="dc">의사결정 요소 가중치 평가</div></div>
       <div class="skill reveal"><div class="nm">델파이 기법</div><div class="dc">전문가 합의 도출</div></div>
       <div class="skill reveal"><div class="nm">메타분석</div><div class="dc">다수 연구 통합 효과크기 산출</div></div>
-      <div class="skill reveal"><div class="nm">베이지안 네트워크</div><div class="dc">불확실성 기반 위험 추론</div></div>
+      <div class="skill reveal"><div class="nm">베이지안 네트워크</div><div class="dc">불확실성 기반 사고 시나리오 예측</div></div>
       <div class="skill reveal"><div class="nm">대응분석</div><div class="dc">범주형 데이터 이미지 맵핑</div></div>
-      <div class="skill reveal"><div class="nm">YOLO 객체 인식</div><div class="dc">현장 위험 상태 실시간 탐지</div></div>
-      <div class="skill reveal"><div class="nm">스마트 플랫폼</div><div class="dc">IoT·모바일 통합 시스템</div></div>
+      <div class="skill reveal"><div class="nm">YOLOv8 Vision AI</div><div class="dc">위험 객체·작업 상태 실시간 탐지</div></div>
+      <div class="skill reveal"><div class="nm">멀티모달 LLM</div><div class="dc">현장 텍스트·영상 통합 추론</div></div>
+      <div class="skill reveal"><div class="nm">지식그래프 (KG)</div><div class="dc">작업·환경·위험 관계 시맨틱 모델</div></div>
+      <div class="skill reveal"><div class="nm">RTK UAV 포인트클라우드</div><div class="dc">3D 공간 위험 매핑</div></div>
+      <div class="skill reveal"><div class="nm">스마트 통합 플랫폼</div><div class="dc">IoT·모바일·BIM 단일 그래프 통합</div></div>
       <div class="skill reveal"><div class="nm">SSEIT 감성지능</div><div class="dc">감성안전 척도 타당화</div></div>
       <div class="skill reveal"><div class="nm">위험성평가 체계</div><div class="dc">공종·업종별 체크리스트</div></div>
     </div>
@@ -461,10 +659,13 @@
 
 <footer>
   <div class="container">
-    <p class="sigla">Yoo-mi Moon · 문유미</p>
-    <p>© 2026 Kyonggi University · KOSDI Research Institute</p>
+    <p class="sigla">Yoo-mi Moon · 문유미 · C-SENSE Lab</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:6px">Contextual Safety Engineering &amp; Networked Semantic Entity</p>
+    <p>© 2026 경기대학교 일반대학원 건설안전전공 · 한국재난정보학회 연구소장</p>
     <p style="margin-top:8px">
       <a href="mailto:mym1003@kyonggi.ac.kr" style="color:var(--accent)">mym1003@kyonggi.ac.kr</a>
+      &nbsp;·&nbsp;
+      <a href="https://mym1003-cloud.github.io/mym1003_cloud/" target="_blank" rel="noopener" style="color:var(--accent)">연구 포트폴리오 (GitHub Pages)</a>
     </p>
   </div>
 </footer>
@@ -487,7 +688,7 @@
     {y:2025,t:'Analysis of Termite Infestation Routes in Urban Hanoks & CESM Performance',a:'신연철, 문유미',s:'건축학회',type:'intl',tag:[]},
     {y:2025,t:'Impact of Emotional Intelligence Training on Safety Behavior in Construction Sites',a:'김경수, 신연철, 문유미',s:'한국재난정보학회',type:'intl',tag:['emo']},
     {y:2025,t:'Research on Ways to Build an Integrated Smart Platform for Construction Site Safety',a:'신연철, 문유미',s:'건축학회',type:'intl',tag:['smart']},
-    {y:2025,t:'Generate point clouds with detected object information using YOLOv8s Seg and RTK UAV',a:'조정민 외 5인',s:'측량학회',type:'intl',tag:['smart']},
+    {y:2025,t:'Generate point clouds with detected object information using YOLOv8s Seg and RTK UAV',a:'조정민 외 5인',s:'측량학회',type:'intl',tag:['smart','ai']},
     {y:2025,t:'추락사고 예방을 위한 가설재 "안전필수확인점" 필요성 연구',a:'양정민, 박정옥, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
     {y:2025,t:'델파이 및 교차분석을 통한 건설현장 안전 업무의 행정 이원화와 직무 난이도 간 상관관계 연구',a:'김찬원, 양정민, 문유미',s:'한국재난정보학회',type:'dom',tag:[]},
     {y:2025,t:'공동주택 재도장공사 위험요인 분석 및 위험성평가 체크리스트 활용 연구',a:'장원준, 형성한, 문유미',s:'한국재난정보학회',type:'dom',tag:['risk']},
@@ -555,7 +756,7 @@
       y: th.y,
       t: th.t,
       a: '지도제자 · ' + th.a,
-      s: '경기대학교 공학대학원',
+      s: '경기대학교 일반대학원 건설안전전공',
       type: 'thesis',
       tag: []
     }))
@@ -674,7 +875,7 @@
   // Nav active section
   safe(() => {
     const links = document.querySelectorAll('.nav-links a');
-    const ids = ['overview','fields','papers','books','skills'];
+    const ids = ['overview','csense','fields','papers','books','skills'];
     const secs = ids.map(id => document.getElementById(id)).filter(Boolean);
     window.addEventListener('scroll', () => {
       let cur = 'overview';
