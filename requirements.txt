@@ -1,0 +1,17 @@
+rdflib
+numpy
+pandas
+matplotlib
+scipy
+seaborn
+statsmodels
+scikit-learn
+ultralytics
+loguru
+pydantic
+fastapi
+langchain
+langchain-community
+python-docx
+pywin32
+

@@ -1,0 +1,6 @@
+@prefix ns1: <http://example.org/> .
+
+ns1:ConstructionSite_A ns1:hasSafetyIssue ns1:FallHazard .
+
+ns1:LaborDept ns1:performs ns1:SiteInspection .
+

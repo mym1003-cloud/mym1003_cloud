@@ -1,0 +1,23 @@
+@prefix ns1: <http://example.org/safety#> .
+@prefix ns2: <http://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ns2:ConstructionSite_B ns2:hasSafetyIssue ns2:FireHazard .
+
+ns2:ConstructionSite_C ns2:hasSafetyIssue ns2:ElectricHazard .
+
+ns2:Site_B ns2:hasHazard ns2:Fire .
+
+ns1:Fire ns1:requiresAction ns1:Extinguisher .
+
+ns1:Site_A ns1:hasHazard ns1:Fall .
+
+ns2:Fire ns2:riskLevel ns2:Medium .
+
+ns1:Extinguisher rdfs:label "소화기 배치" .
+
+ns1:Fall ns1:requiresAction ns1:SafetyNet ;
+    ns1:riskLevel ns1:High .
+
+ns1:SafetyNet rdfs:label "안전망 설치" .
+

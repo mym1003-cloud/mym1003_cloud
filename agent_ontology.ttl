@@ -1,0 +1,356 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ag:   <http://antigravity.local/agent#> .
+
+# ═══════════════════════════════════════════════════════════════
+#  Ontology Header
+# ═══════════════════════════════════════════════════════════════
+
+<http://antigravity.local/agent> a owl:Ontology ;
+    rdfs:label "AntiGravity AgentGPT Ontology" ;
+    rdfs:comment "AgentGPT 플랫폼의 에이전트, 도구, 모델, 서비스, 능력을 기술하는 온톨로지" ;
+    owl:versionInfo "1.0.0" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Classes
+# ═══════════════════════════════════════════════════════════════
+
+ag:Tool a owl:Class ;
+    rdfs:label "Tool" ;
+    rdfs:comment "에이전트가 태스크를 수행할 때 사용하는 도구" .
+
+ag:DefaultTool a owl:Class ;
+    rdfs:subClassOf ag:Tool ;
+    rdfs:label "DefaultTool" ;
+    rdfs:comment "항상 사용 가능한 기본 도구" .
+
+ag:ExternalTool a owl:Class ;
+    rdfs:subClassOf ag:Tool ;
+    rdfs:label "ExternalTool" ;
+    rdfs:comment "외부 API 키가 필요한 도구" .
+
+ag:LLMModel a owl:Class ;
+    rdfs:label "LLMModel" ;
+    rdfs:comment "에이전트가 사용하는 언어 모델" .
+
+ag:Service a owl:Class ;
+    rdfs:label "Service" ;
+    rdfs:comment "도구나 모델이 의존하는 외부 서비스 또는 API" .
+
+ag:Capability a owl:Class ;
+    rdfs:label "Capability" ;
+    rdfs:comment "도구 또는 모델이 제공하는 능력" .
+
+ag:LoopStep a owl:Class ;
+    rdfs:label "LoopStep" ;
+    rdfs:comment "에이전트 실행 루프의 단계 (start→analyze→execute→create→summarize→chat)" .
+
+ag:AgentRun a owl:Class ;
+    rdfs:label "AgentRun" ;
+    rdfs:comment "에이전트의 단일 실행 인스턴스" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Object Properties
+# ═══════════════════════════════════════════════════════════════
+
+ag:usesService a owl:ObjectProperty ;
+    rdfs:label "usesService" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range ag:Service ;
+    rdfs:comment "도구가 의존하는 외부 서비스" .
+
+ag:providesCapability a owl:ObjectProperty ;
+    rdfs:label "providesCapability" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range ag:Capability ;
+    rdfs:comment "도구가 제공하는 능력" .
+
+ag:requiresCapability a owl:ObjectProperty ;
+    rdfs:label "requiresCapability" ;
+    rdfs:domain ag:LoopStep ;
+    rdfs:range ag:Capability ;
+    rdfs:comment "루프 단계 수행에 필요한 능력" .
+
+ag:fallbackTo a owl:ObjectProperty ;
+    rdfs:label "fallbackTo" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range ag:Tool ;
+    rdfs:comment "도구 실패 시 대신 사용하는 도구" .
+
+ag:nextStep a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:label "nextStep" ;
+    rdfs:domain ag:LoopStep ;
+    rdfs:range ag:LoopStep ;
+    rdfs:comment "루프에서 다음에 실행되는 단계 (추이적)" .
+
+ag:usesTool a owl:ObjectProperty ;
+    rdfs:label "usesTool" ;
+    rdfs:domain ag:LoopStep ;
+    rdfs:range ag:Tool ;
+    rdfs:comment "루프 단계에서 사용하는 도구" .
+
+ag:usesModel a owl:ObjectProperty ;
+    rdfs:label "usesModel" ;
+    rdfs:domain ag:AgentRun ;
+    rdfs:range ag:LLMModel ;
+    rdfs:comment "에이전트 실행에 사용하는 LLM 모델" .
+
+ag:hasStep a owl:ObjectProperty ;
+    rdfs:label "hasStep" ;
+    rdfs:domain ag:AgentRun ;
+    rdfs:range ag:LoopStep ;
+    rdfs:comment "에이전트 실행이 포함하는 루프 단계" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Datatype Properties
+# ═══════════════════════════════════════════════════════════════
+
+ag:toolDescription a owl:DatatypeProperty ;
+    rdfs:label "toolDescription" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range xsd:string ;
+    rdfs:comment "에이전트 프롬프트에 노출되는 도구 설명 (Tool.description)" .
+
+ag:publicDescription a owl:DatatypeProperty ;
+    rdfs:label "publicDescription" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range xsd:string ;
+    rdfs:comment "UI에 표시되는 도구 설명 (Tool.public_description)" .
+
+ag:requiresApiKey a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "requiresApiKey" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "도구 사용에 외부 API 키가 필요한지 여부" .
+
+ag:imageUrl a owl:DatatypeProperty ;
+    rdfs:label "imageUrl" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment "UI에서 도구를 나타내는 아이콘 경로" .
+
+ag:maxTokens a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "maxTokens" ;
+    rdfs:domain ag:LLMModel ;
+    rdfs:range xsd:positiveInteger ;
+    rdfs:comment "모델이 처리 가능한 최대 토큰 수" .
+
+ag:modelId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "modelId" ;
+    rdfs:domain ag:LLMModel ;
+    rdfs:range xsd:string ;
+    rdfs:comment "API 호출 시 사용하는 모델 식별자 문자열" .
+
+ag:isDefault a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "isDefault" ;
+    rdfs:domain ag:Tool ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "에이전트 실행 시 기본으로 포함되는 도구인지 여부" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Capability Individuals
+# ═══════════════════════════════════════════════════════════════
+
+ag:WebSearch a ag:Capability ;
+    rdfs:label "WebSearch" ;
+    rdfs:comment "인터넷 검색 수행 능력" .
+
+ag:CodeGeneration a ag:Capability ;
+    rdfs:label "CodeGeneration" ;
+    rdfs:comment "코드 작성, 리팩토링, 버그 수정 능력" .
+
+ag:ImageGeneration a ag:Capability ;
+    rdfs:label "ImageGeneration" ;
+    rdfs:comment "AI 이미지 생성 능력" .
+
+ag:TextReasoning a ag:Capability ;
+    rdfs:label "TextReasoning" ;
+    rdfs:comment "LLM 기반 텍스트 추론 및 분석 능력" .
+
+ag:TaskAnalysis a ag:Capability ;
+    rdfs:label "TaskAnalysis" ;
+    rdfs:comment "태스크 분석 및 적절한 도구 선택 능력" .
+
+ag:TaskCreation a ag:Capability ;
+    rdfs:label "TaskCreation" ;
+    rdfs:comment "목표 달성을 위한 하위 태스크 생성 능력" .
+
+ag:Summarization a ag:Capability ;
+    rdfs:label "Summarization" ;
+    rdfs:comment "결과 취합 및 요약 능력" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Service Individuals
+# ═══════════════════════════════════════════════════════════════
+
+ag:SerperAPI a ag:Service ;
+    rdfs:label "SerperAPI" ;
+    rdfs:comment "Google 검색 결과 제공 (serper.dev)" .
+
+ag:OpenAIAPI a ag:Service ;
+    rdfs:label "OpenAIAPI" ;
+    rdfs:comment "GPT 모델 및 DALL-E 이미지 생성 API" .
+
+ag:ReplicateAPI a ag:Service ;
+    rdfs:label "ReplicateAPI" ;
+    rdfs:comment "Stable Diffusion 이미지 생성 API (Replicate)" .
+
+ag:PineconeAPI a ag:Service ;
+    rdfs:label "PineconeAPI" ;
+    rdfs:comment "벡터 데이터베이스 (장기 기억 저장)" .
+
+ag:HeliconeAPI a ag:Service ;
+    rdfs:label "HeliconeAPI" ;
+    rdfs:comment "OpenAI API 모니터링 및 캐싱 프록시" .
+
+ag:AnthropicAPI a ag:Service ;
+    rdfs:label "AnthropicAPI" ;
+    rdfs:comment "Claude 모델 API" .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Tool Individuals  (실제 코드: tools/ 디렉터리 기반)
+# ═══════════════════════════════════════════════════════════════
+
+ag:SearchTool a ag:DefaultTool ;
+    rdfs:label "Search" ;
+    ag:toolDescription "Search Google for short up to date searches for simple questions about public information news and people." ;
+    ag:publicDescription "Search google for information about current events." ;
+    ag:requiresApiKey true ;
+    ag:imageUrl "/tools/google.png" ;
+    ag:isDefault true ;
+    ag:usesService ag:SerperAPI ;
+    ag:providesCapability ag:WebSearch ;
+    ag:fallbackTo ag:ReasonTool .
+
+ag:CodeTool a ag:ExternalTool ;
+    rdfs:label "Code" ;
+    ag:toolDescription "Should only be used to write code, refactor code, fix code bugs, and explain programming concepts." ;
+    ag:publicDescription "Write and review code." ;
+    ag:requiresApiKey false ;
+    ag:imageUrl "/tools/openai-white.png" ;
+    ag:isDefault false ;
+    ag:usesService ag:OpenAIAPI ;
+    ag:providesCapability ag:CodeGeneration , ag:TextReasoning .
+
+ag:ImageTool a ag:ExternalTool ;
+    rdfs:label "Image" ;
+    ag:toolDescription "Used to sketch, draw, or generate an image." ;
+    ag:publicDescription "Generate AI images." ;
+    ag:requiresApiKey true ;
+    ag:imageUrl "/tools/replicate.png" ;
+    ag:isDefault false ;
+    ag:usesService ag:ReplicateAPI , ag:OpenAIAPI ;
+    ag:providesCapability ag:ImageGeneration .
+
+ag:SIDTool a ag:ExternalTool ;
+    rdfs:label "SID" ;
+    ag:publicDescription "Access personal data from Google Drive, Gmail, and more." ;
+    ag:requiresApiKey true ;
+    ag:imageUrl "/tools/openai-white.png" ;
+    ag:isDefault false ;
+    ag:providesCapability ag:WebSearch .
+
+ag:ReasonTool a ag:DefaultTool ;
+    rdfs:label "Reason" ;
+    ag:toolDescription "Reason about a task using the language model when no other tool is available." ;
+    ag:requiresApiKey false ;
+    ag:isDefault false ;
+    ag:usesService ag:OpenAIAPI ;
+    ag:providesCapability ag:TextReasoning .
+
+ag:ConcludeTool a ag:DefaultTool ;
+    rdfs:label "Conclude" ;
+    ag:toolDescription "Used to mark the agent run as complete when the goal is achieved." ;
+    ag:requiresApiKey false ;
+    ag:isDefault false ;
+    ag:providesCapability ag:Summarization .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  LLM Model Individuals  (LLM_Model, LLM_MODEL_MAX_TOKENS 기반)
+# ═══════════════════════════════════════════════════════════════
+
+ag:GPT35Turbo a ag:LLMModel ;
+    rdfs:label "gpt-3.5-turbo" ;
+    ag:modelId "gpt-3.5-turbo" ;
+    ag:maxTokens 4000 .
+
+ag:GPT35Turbo16k a ag:LLMModel ;
+    rdfs:label "gpt-3.5-turbo-16k" ;
+    ag:modelId "gpt-3.5-turbo-16k" ;
+    ag:maxTokens 16000 .
+
+ag:GPT4 a ag:LLMModel ;
+    rdfs:label "gpt-4" ;
+    ag:modelId "gpt-4" ;
+    ag:maxTokens 8000 .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Loop Step Individuals  (Loop_Step Literal 기반)
+# ═══════════════════════════════════════════════════════════════
+
+ag:StartStep a ag:LoopStep ;
+    rdfs:label "start" ;
+    rdfs:comment "에이전트 실행 시작 — 목표 설정 및 초기 태스크 생성" ;
+    ag:requiresCapability ag:TaskCreation ;
+    ag:nextStep ag:AnalyzeStep .
+
+ag:AnalyzeStep a ag:LoopStep ;
+    rdfs:label "analyze" ;
+    rdfs:comment "현재 태스크에 적합한 도구를 OpenAI Functions로 선택" ;
+    ag:requiresCapability ag:TaskAnalysis ;
+    ag:nextStep ag:ExecuteStep .
+
+ag:ExecuteStep a ag:LoopStep ;
+    rdfs:label "execute" ;
+    rdfs:comment "선택된 도구를 실제로 호출하여 태스크 수행" ;
+    ag:requiresCapability ag:WebSearch , ag:CodeGeneration , ag:ImageGeneration , ag:TextReasoning ;
+    ag:usesTool ag:SearchTool , ag:CodeTool , ag:ImageTool , ag:SIDTool , ag:ReasonTool ;
+    ag:nextStep ag:CreateStep .
+
+ag:CreateStep a ag:LoopStep ;
+    rdfs:label "create" ;
+    rdfs:comment "실행 결과를 바탕으로 다음 하위 태스크 목록 생성" ;
+    ag:requiresCapability ag:TaskCreation ;
+    ag:nextStep ag:SummarizeStep .
+
+ag:SummarizeStep a ag:LoopStep ;
+    rdfs:label "summarize" ;
+    rdfs:comment "모든 결과를 종합하여 최종 요약 생성" ;
+    ag:requiresCapability ag:Summarization .
+
+ag:ChatStep a ag:LoopStep ;
+    rdfs:label "chat" ;
+    rdfs:comment "사용자와 대화 형식으로 상호작용하는 단계" ;
+    ag:requiresCapability ag:TextReasoning .
+
+
+# ═══════════════════════════════════════════════════════════════
+#  Disjointness Axioms
+# ═══════════════════════════════════════════════════════════════
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers (
+        ag:SearchTool ag:CodeTool ag:ImageTool
+        ag:SIDTool ag:ReasonTool ag:ConcludeTool
+    ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers (
+        ag:GPT35Turbo ag:GPT35Turbo16k ag:GPT4
+    ) .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers (
+        ag:StartStep ag:AnalyzeStep ag:ExecuteStep
+        ag:CreateStep ag:SummarizeStep ag:ChatStep
+    ) .
